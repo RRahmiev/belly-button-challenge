@@ -1,11 +1,10 @@
-//Use the D3 library: URL https://2u-data-curriculum-team.s3.amazonaws.com/dataviz-classroom/v1.1/14-Interactive-Web-Visualizations/02-Homework/samples.json
+// Using D3 to fetch the data using a specified URL
 
 const DataSamples = "https://2u-data-curriculum-team.s3.amazonaws.com/dataviz-classroom/v1.1/14-Interactive-Web-Visualizations/02-Homework/samples.json";
 
-//CREATING DROPDOWN
+// Creating dropdown
 function DropDownFunction() {
 
-    // DROPDOWN MENU
     var dropdownmenu = d3.select("#selDataset");
     
     d3.json(DataSamples).then((data) => {
@@ -24,11 +23,10 @@ function DropDownFunction() {
     });    
 }
 
-
-// CHARTS-UPDATE
+// Updating charts
 function DemoInfo(subject) {
 
-    // DEMOGRAPHIC INFO-PANEL
+    // Displaying demographic info
     var Demographic = d3.select("#sample-metadata");
 
         Demographic.html("");
@@ -48,29 +46,24 @@ function DemoInfo(subject) {
         
         var wfreq = metaData.wfreq;
 
-
     });
 }
 
-
-// GRAPHS
+// Creating visuals
 function Graphs(subject, samples) {
 
     console.log("SAMPLES-INFO:", samples);
     console.log("ID-SUBJECT:", subject);
-
     
     var otuIDs = samples.otu_ids;
     var otuLabels = samples.otu_labels;
     var sampleValues = samples.sample_values;
-
     
-    // BAR CHART
+    // Creating horizontal Bar Chart
     
     var topOtuIDs = otuIDs.slice(0,10).reverse().map(otuID => "OTU " + otuID);
     var topOtuLabels = otuLabels.slice(0,10).reverse();
     var topsampleValues = sampleValues.slice(0,10).reverse();
-
     
     let traceBar = {
         x: topsampleValues,
@@ -81,7 +74,6 @@ function Graphs(subject, samples) {
     }
     
     let dataBar = [traceBar];
-
     
     let layoutBar = {
         title: `<b>TOP 10 BACTERIAS <br> IN SUBJECT NO: ${subject}</b>`,
@@ -91,8 +83,7 @@ function Graphs(subject, samples) {
    
     Plotly.newPlot("bar", dataBar, layoutBar);
 
-    // BUBBLE CHART //
-    
+    // Creating Bubble Chart    
    
     let traceBubble = {
         x: otuIDs,
@@ -107,7 +98,6 @@ function Graphs(subject, samples) {
     }
     
     let dataBubble = [traceBubble];
-
     
     let layoutBubble = {
         title: `<b>ALL BACTERIA IN SUBJECT NO: ${subject}</b>`,
@@ -119,7 +109,7 @@ function Graphs(subject, samples) {
     
 }
 
-// DROPDOWN CHANGE
+// Selecting different samples from dropdown
 function optionChanged(nextID) {
     console.log("newID:", nextID)
     DemoInfo(nextID);
